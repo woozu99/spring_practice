@@ -18,6 +18,7 @@ public class HelloSpring {
 		
 		//매개값으로 ("id", className.class)
 		SpringTest st = ct.getBean("test", SpringTest.class);
+		st.hello();
 		
 		ct.close();
 		
