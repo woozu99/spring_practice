@@ -7,12 +7,14 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<dependencies>
+		<!-- spring-context 모듈 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>5.2.9.RELEASE</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
+		
+		<!-- jstl -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
