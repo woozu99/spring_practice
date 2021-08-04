@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.springframework.org/schema/beans  
+http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="person1" class="basic.ex03.Person">
+		<property name="name" value="홍길동" />
+		<property name="age" value="20" />
+	</bean>
+
+	<!-- bean 객체는 scope을 따로 설정해주지 않으면 기본적으로 싱글톤패턴으로 생성된다.
+	매번 다른 객체를 생성하기를 원한다면 scope를 prototype으로 설정해야 한다. -->
+	<bean id="person2" class="basic.ex03.Person" scope="prototype">
+		<property name="name" value="홍길동" />
+		<property name="age" value="20" />
+	</bean>
+	
+</beans>
