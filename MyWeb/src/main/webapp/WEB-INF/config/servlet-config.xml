@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 자동 빈 등록 가능하게 함 -->
+	<annotation-driven />
+
+	<!-- 외부에 있는 경로와 실제 경로를 연결해주는 태그 -->
+	<!-- css, js, img...의 파일 경로가 복잡할 때 많이 사용 -->
+	<!-- jps파일 같은데에서 경로가 긴 거 일일이 안써도 됨 -->
+	<resources mapping="/resources/**" location="/resources/" />
+
+	<!-- viewResolver: 컨트롤러가 리턴한 return 문자열에 앞뒤에 적절한 경로를 붙이는 것. -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<!-- 아노테이션으로 등록된 클래스 객체들을 탐색해 주는 설정 태그 -->
+	<!-- base-package에다가는 탐색할 태키지 경로를 쓰면 하위 패키지도 전부 검색 됨 -->
+	<context:component-scan base-package="com.spring.myweb" />
+	
+	
+	
+</beans:beans>
