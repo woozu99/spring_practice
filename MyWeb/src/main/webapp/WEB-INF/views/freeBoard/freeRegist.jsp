@@ -34,7 +34,7 @@
 	                    
 	                    <div class="titlefoot">
 	                        <button class="btn btn-regist" type="button">등록</button>
-	                        <button class="btn btn-list" type="button">목록</button>
+	                        <button class="btn btn-list" type="button" onclick="location.href='<c:url value="/freeBoard/freeList"/>'">목록</button>
 	                    </div>
                     </form>
                 </div>

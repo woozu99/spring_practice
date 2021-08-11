@@ -77,4 +77,10 @@
 
 <%@ include file="../include/footer.jsp" %>
 
+<script>
+	let isDeleted = '${isDeleted}'
+	if(isDeleted !== ''){
+		alert("게시글이 정상 삭제되었습니다.");
+	}
+</script>
 

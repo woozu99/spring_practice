@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.myweb.command.FreeboardVO;
 import com.spring.myweb.freeboard.service.IFreeboardService;
@@ -59,5 +61,35 @@ public class FreeboardController {
 		return "/freeBoard/freeDetail";
 	}
 	
+	//글 수정 화면
+	@GetMapping("/freeModify/{bno}")
+	public String freeModify(@PathVariable int bno, Model model) {
+		
+		System.out.println("/freeModify: GET");
+		model.addAttribute("article", service.getContent(bno));
+		
+		return "/freeBoard/freeModify";
+	}
+	
 	//글 수정
+	@PostMapping("/freeModify")
+	public String modify(FreeboardVO article, RedirectAttributes ra) {
+		
+		System.out.println("/freeModify: POST");
+		service.update(article);
+		ra.addFlashAttribute("isModified", "isModified");
+		
+		return "redirect:/freeBoard/freeDetail/" + article.getBno();
+	}
+	
+	//글 삭제
+	@PostMapping("/freeDelete")
+	public String delete(@RequestParam("bno") int bno, RedirectAttributes ra) {
+		
+		System.out.println("/freeDelete: POST");
+		service.delete(bno);
+		ra.addFlashAttribute("isDeleted", "isModified");
+		
+		return "redirect:/freeBoard/freeList";
+	}
 }
