@@ -30,7 +30,7 @@ public class FreeBoardMapperTest {
 	
 	@Test
 	public void getListTest() {
-		mapper.getList().forEach(vo -> System.out.println(vo));
+		mapper.getList(10, 20).forEach(vo -> System.out.println(vo));
 	}
 	
 	@Test

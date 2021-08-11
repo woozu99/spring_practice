@@ -11,8 +11,32 @@
 	</insert>
 
 	<select id="getList" resultType="com.spring.myweb.command.FreeboardVO">
-		SELECT * FROM freeboard
-		ORDER BY bno DESC
+		SELECT *
+		FROM
+			(	
+			SELECT ROWNUM AS rn, fbl.*
+			FROM
+				(
+					SELECT * 
+					FROM freeboard
+					<if test="condition == 'title'">
+					WHERE title LIKE '%'||#{keyword}||'%'
+					</if>
+					<if test="condition == 'content'">
+					WHERE content LIKE '%'||#{keyword}||'%'
+					</if>
+					<if test="condition == 'writer'">
+					WHERE writer LIKE '%'||#{keyword}||'%'
+					</if>
+					<if test="condition == 'contentWriter'">
+					WHERE content LIKE '%'||#{keyword}||'%' or writer LIKE '%'||#{keyword}||'%'
+					</if>
+					ORDER BY ROWNUM DESC
+				) fbl
+			)
+		<![CDATA[
+		WHERE rn >= #{start} AND rn < #{end}
+		]]>
 	</select>
 
 	<select id="getTotal" resultType="int">

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.myweb.command.FreeboardVO;
 import com.spring.myweb.freeboard.mapper.IFreeBoardMapper;
+import com.spring.myweb.util.PageVO;
 
 @Service
 public class FreeboardService implements IFreeboardService {
@@ -21,8 +22,9 @@ public class FreeboardService implements IFreeboardService {
 	}
 
 	@Override
-	public List<FreeboardVO> getList() {
-		return mapper.getList();
+	public List<FreeboardVO> getList(PageVO page) {
+		int start, end;
+		return mapper.getList(start, end, page);
 	}
 
 	@Override
