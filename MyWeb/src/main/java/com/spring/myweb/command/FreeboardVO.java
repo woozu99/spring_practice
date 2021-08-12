@@ -38,4 +38,5 @@ public class FreeboardVO {
 	private String content;
 	private Timestamp regdate;
 	private Timestamp updatedate;
+	private boolean newFlag;
 }

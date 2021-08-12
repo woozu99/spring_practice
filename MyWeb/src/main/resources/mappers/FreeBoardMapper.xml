@@ -32,7 +32,7 @@
 			SELECT ROWNUM AS rn, fbl.*
 			FROM
 				(
-					SELECT * 
+					SELECT *
 					FROM freeboard
 					<include refid="searchIfQuery"/>
 					ORDER BY ROWNUM DESC

@@ -43,7 +43,12 @@
                         	<c:forEach var="article" items="${boardList}">
 	                            <tr>
 	                                <td>${article.bno}</td>
-	                                <td><a href="<c:url value='/freeBoard/freeDetail'/>/${article.bno}">${article.title}</a></td>
+	                                <td>
+	                                	<a href="<c:url value='/freeBoard/freeDetail'/>/${article.bno}">${article.title}</a>
+	                                	<c:if test="${article.newFlag}">
+	                                		<img alt="new" src="/resources/img/new.gif">
+	                                	</c:if>
+	                                </td>
 	                                <td>${article.writer}</td>
 	                                <td><fmt:formatDate value="${article.regdate}" pattern="yyyy년 MM월 dd일 HH:mm:ss" /></td>
 	                                <td><fmt:formatDate value="${article.updatedate}" pattern="yyyy년 MM월 dd일 HH:mm:ss" /></td>

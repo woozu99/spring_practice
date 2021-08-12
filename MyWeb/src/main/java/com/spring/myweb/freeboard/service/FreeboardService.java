@@ -1,5 +1,6 @@
 package com.spring.myweb.freeboard.service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,16 @@ public class FreeboardService implements IFreeboardService {
 
 	@Override
 	public List<FreeboardVO> getList(PageVO page) {
-		int start, end;
-		return mapper.getList(page);
+		
+		List<FreeboardVO> list = mapper.getList(page);
+		for(FreeboardVO vo : list) {
+			if(System.currentTimeMillis() - vo.getRegdate().getTime() < 1000*60*60) {
+				vo.setNewFlag(true);
+			} else {
+				vo.setNewFlag(false);
+			}
+		}
+		return list;
 	}
 
 	@Override
