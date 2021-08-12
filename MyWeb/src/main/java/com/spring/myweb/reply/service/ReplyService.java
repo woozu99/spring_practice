@@ -16,12 +16,12 @@ public class ReplyService implements IReplyService {
 	
 	@Override
 	public void replyRegist(ReplyVO vo) {
-
+		mapper.replyRegist(vo);
 	}
 
 	@Override
 	public List<ReplyVO> getList(int bno) {
-		return null;
+		return mapper.getList(bno);
 	}
 
 	@Override

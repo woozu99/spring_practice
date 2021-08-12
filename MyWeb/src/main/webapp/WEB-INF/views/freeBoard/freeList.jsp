@@ -1,6 +1,7 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>   
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> 
 
 <%@ include file="../include/header.jsp" %>
     <section>
@@ -44,8 +45,8 @@
 	                                <td>${article.bno}</td>
 	                                <td><a href="<c:url value='/freeBoard/freeDetail'/>/${article.bno}">${article.title}</a></td>
 	                                <td>${article.writer}</td>
-	                                <td>${article.regdate}</td>
-	                                <td>${article.updatedate}</td>
+	                                <td><fmt:formatDate value="${article.regdate}" pattern="yyyy년 MM월 dd일 HH:mm:ss" /></td>
+	                                <td><fmt:formatDate value="${article.updatedate}" pattern="yyyy년 MM월 dd일 HH:mm:ss" /></td>
 	                            </tr>
                             </c:forEach>
                         </tbody>
