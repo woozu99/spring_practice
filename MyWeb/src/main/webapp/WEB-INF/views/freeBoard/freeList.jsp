@@ -14,15 +14,15 @@
                     <hr>
                     
                     <!--form select를 가져온다 -->
-                    <form>
-		    <div class="search-wrap">
-                       <button type="button" class="btn btn-info search-btn">검색</button>
-                       <input type="text" class="form-control search-input">
-                       <select class="form-control search-select">
-                            <option>제목</option>
-                            <option>내용</option>
-                            <option>작성자</option>
-                            <option>제목+내용</option>
+                    <form action="<c:url value='/freeBoard/freeList'/>">
+		    		<div class="search-wrap">
+                       <button type="submit" class="btn btn-info search-btn">검색</button>
+                       <input type="text" class="form-control search-input" name="keyword">
+                       <select class="form-control search-select" name="condition" id="searchSelect">
+                            <option value="title">제목</option>
+                            <option value="content">내용</option>
+                            <option value="writer">작성자</option>
+                            <option value="titleContent">제목+내용</option>
                        </select>
                     </div>
 		    </form>
@@ -52,19 +52,25 @@
                         
                     </table>
 
-
                     <!--페이지 네이션을 가져옴-->
-		    <form>
+		    <form action="<c:url value='/freeBoard/freeList'/>" id="pageForm">
+				    <input type="hidden" name="keyword" value='${page.keyword}'>
+				    <input type="hidden" name="condition" value='${page.condition}'>
+		    		<input type="hidden" id="pageNum" name="pageNum">
+		    		<input type="hidden" id="startPage" name="startPage">
+		    		
                     <div class="text-center">
                     <hr>
                     <ul class="pagination pagination-sm">
-                        <li><a href="#">이전</a></li>
-                        <li  class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">다음</a></li>
+                    	<c:if test='${pc.prevPage}'>
+                        	<li><a href="#" data-start-page='${pc.startPage - pc.maximumPageNum}' data-page-num='${pc.startPage - 1}'>이전</a></li>
+                        </c:if>
+                        <c:forEach var="pageNum" begin='${pc.startPage}' end='${pc.endPage}'>
+                        	<li  class="page-btn "><a href="#" data-start-page='${pc.startPage}' data-page-num='${pageNum}'>${pageNum}</a></li>
+                        </c:forEach>
+                        <c:if test='${pc.nextPage}'>
+                        	<li><a href="#" data-start-page='${pc.startPage + pc.maximumPageNum}' data-page-num='${pc.endPage + 1}'>다음</a></li>
+                        </c:if>
                     </ul>
                     <button type="button" class="btn btn-info" onclick="location.href='<c:url value='/freeBoard/freeRegist'/>'">글쓰기</button>
                     </div>
@@ -82,5 +88,31 @@
 	if(isDeleted !== ''){
 		alert("게시글이 정상 삭제되었습니다.");
 	}
+	
+	$(function(){
+		
+		$('#pageForm a').on('click', function(e){
+
+			e.preventDefault();
+			$('#pageNum').val(e.target.dataset.pageNum);
+			$('#startPage').val(e.target.dataset.startPage);
+			
+			$('#pageForm').submit();
+		});
+	});
+	
+	/*
+	console.log($('#searchSelect').children('option'));
+	
+	for(let $selection of $('#searchSelect').children('option').find()){
+		if($selectioin.value === ${page.condition}){
+			alert($selectioin.value);
+			$selection.prop('selected', true);
+		}
+	}
+	*/
+	//if($('.page-btn').children('a').val() === ${page.pageNum}){
+	//	$('.page-btn').addClass('active');
+	//}
 </script>
 

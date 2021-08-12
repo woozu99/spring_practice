@@ -24,12 +24,12 @@ public class FreeboardService implements IFreeboardService {
 	@Override
 	public List<FreeboardVO> getList(PageVO page) {
 		int start, end;
-		return mapper.getList(start, end, page);
+		return mapper.getList(page);
 	}
 
 	@Override
-	public int getTotal() {
-		return mapper.getTotal();
+	public int getTotal(PageVO page) {
+		return mapper.getTotal(page);
 	}
 
 	@Override

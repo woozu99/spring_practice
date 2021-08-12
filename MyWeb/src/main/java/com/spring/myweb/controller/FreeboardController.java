@@ -1,4 +1,4 @@
-package com.spring.myweb.freeboard.controller;
+package com.spring.myweb.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +12,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.myweb.command.FreeboardVO;
 import com.spring.myweb.freeboard.service.IFreeboardService;
+import com.spring.myweb.util.PageCreator;
+import com.spring.myweb.util.PageVO;
 
 @Controller
 @RequestMapping("/freeBoard")
@@ -22,11 +24,17 @@ public class FreeboardController {
 	
 	//목록화면
 	@GetMapping("/freeList")
-	public void freeList(Model model) {
+	public void freeList(Model model, PageVO page, PageCreator pc) {
 		
 		System.out.println("/freeList: GET");
-		model.addAttribute("boardList", service.getList());
 
+		pc.calcPageCreatorVals(service.getTotal(page), page);
+		
+		System.out.println(pc);
+		
+		model.addAttribute("boardList", service.getList(page));
+		model.addAttribute("page", page);
+		model.addAttribute("pc", pc);
 	}
 	
 	//글쓰기화면

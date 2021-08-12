@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.spring.myweb.command.FreeboardVO;
 import com.spring.myweb.freeboard.mapper.IFreeBoardMapper;
+import com.spring.myweb.util.PageVO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/config/db-config.xml")
@@ -30,12 +31,14 @@ public class FreeBoardMapperTest {
 	
 	@Test
 	public void getListTest() {
-		mapper.getList(10, 20).forEach(vo -> System.out.println(vo));
+		PageVO vo = new PageVO();
+		mapper.getList(vo).forEach(v -> System.out.println(v));
 	}
 	
 	@Test
 	public void getTotalTest() {
-		System.out.println(mapper.getTotal());
+		PageVO vo = new PageVO();
+		System.out.println(mapper.getTotal(vo));
 	}
 	
 	@Test
@@ -56,6 +59,7 @@ public class FreeBoardMapperTest {
 	@Test
 	public void deleteTest() {
 		mapper.delete(1);
-		System.out.println(mapper.getTotal());
+		PageVO vo = new PageVO();
+		System.out.println(mapper.getTotal(vo));
 	}
 }

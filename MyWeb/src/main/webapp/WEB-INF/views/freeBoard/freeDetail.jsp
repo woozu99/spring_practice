@@ -49,18 +49,18 @@
                     <div class="col-xs-12 col-md-9 write-wrap">
                         <form class="reply-wrap">
                             <div class="reply-image">
-                                <img src="../resources/img/profile.png">
+                                <img src="/img/profile.png">
                             </div>
                             <!--form-control은 부트스트랩의 클래스입니다-->
 	                    <div class="reply-content">
-	                        <textarea class="form-control" rows="3"></textarea>
+	                        <textarea class="form-control" rows="3" id="reply"></textarea>
 	                        <div class="reply-group">
 	                              <div class="reply-input">
-	                              <input type="text" class="form-control" placeholder="이름">
-	                              <input type="password" class="form-control" placeholder="비밀번호">
+	                              <input type="text" class="form-control" placeholder="이름" id="replyId">
+	                              <input type="password" class="form-control" placeholder="비밀번호" id="replyPw">
 	                              </div>
 	                              
-	                              <button type="button" class="right btn btn-info">등록하기</button>
+	                              <button type="button" class="right btn btn-info" id="replyRegist">등록하기</button>
 	                        </div>
 	
 	                    </div>
@@ -70,7 +70,7 @@
                         <div id="replyList">
                         <div class='reply-wrap'>
                             <div class='reply-image'>
-                                <img src='../resources/img/profile.png'>
+                                <img src='/img/profile.png'>
                             </div>
                             <div class='reply-content'>
                                 <div class='reply-group'>
@@ -124,4 +124,17 @@
 			alert("게시글 수정이 정상 처리되었습니다");
 		}
 	});
+	
+	//화면이 다 로딩된 후 실행될 자바스크립트(==window.onload)
+	$(document).ready(function(){
+		
+		//댓글 등록
+		$('#replyRegist').click(function(){
+			/*
+			댓글을 등록하려면 게시글 번호도 보내주어야 한다.
+			댓글 내용, 댓글 작성자, 댓글 비밀번호, 게시글 번호를 json형식으로 하나로 모아서 전달해주시면 됩니다.(비동기통신)
+			console.log를 통해 '댓글 등록 완료!'를 확인하고 실제 DB에 댓글이 추가되는지 확인
+			*/
+		});
+	}); //end jquery
 </script>

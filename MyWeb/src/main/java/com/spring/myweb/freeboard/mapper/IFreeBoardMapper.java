@@ -11,10 +11,10 @@ public interface IFreeBoardMapper {
 	void regist(FreeboardVO article);
 	
 	//글 목록
-	List<FreeboardVO> getList(int start, int end, PageVO page);
+	List<FreeboardVO> getList(PageVO page);
 	
 	//총 게시물 수
-	int getTotal();
+	int getTotal(PageVO page);
 	
 	//상세보기
 	FreeboardVO getContent(int bno);

@@ -5,6 +5,21 @@
   
 <mapper namespace="com.spring.myweb.freeboard.mapper.IFreeBoardMapper">
 
+	<sql id="searchIfQuery">
+		<if test="condition == 'title'">
+		WHERE title LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="condition == 'content'">
+		WHERE content LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="condition == 'writer'">
+		WHERE writer LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="condition == 'titleContent'">
+		WHERE content LIKE '%'||#{keyword}||'%' OR writer LIKE '%'||#{keyword}||'%'
+		</if>
+	</sql>
+
 	<insert id="regist">
 		INSERT INTO freeboard(bno, title, writer, content)
 		VALUES(freeboard_seq.NEXTVAL, #{title}, #{writer}, #{content})
@@ -19,29 +34,20 @@
 				(
 					SELECT * 
 					FROM freeboard
-					<if test="condition == 'title'">
-					WHERE title LIKE '%'||#{keyword}||'%'
-					</if>
-					<if test="condition == 'content'">
-					WHERE content LIKE '%'||#{keyword}||'%'
-					</if>
-					<if test="condition == 'writer'">
-					WHERE writer LIKE '%'||#{keyword}||'%'
-					</if>
-					<if test="condition == 'contentWriter'">
-					WHERE content LIKE '%'||#{keyword}||'%' or writer LIKE '%'||#{keyword}||'%'
-					</if>
+					<include refid="searchIfQuery"/>
 					ORDER BY ROWNUM DESC
 				) fbl
 			)
 		<![CDATA[
-		WHERE rn >= #{start} AND rn < #{end}
+		WHERE rn > ((#{pageNum} - 1) * #{countPerPage})
+		AND rn <= (#{pageNum} * #{countPerPage})
 		]]>
 	</select>
 
 	<select id="getTotal" resultType="int">
 		SELECT COUNT(*)
 		FROM freeboard
+		<include refid="searchIfQuery"/>
 	</select>
 	
 	<select id="getContent" resultType="com.spring.myweb.command.FreeboardVO">

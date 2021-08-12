@@ -14,6 +14,7 @@
 	<!-- css, js, img...의 파일 경로가 복잡할 때 많이 사용 -->
 	<!-- jps파일 같은데에서 경로가 긴 거 일일이 안써도 됨 -->
 	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/img/**" location="/resources/img/" />
 
 	<!-- viewResolver: 컨트롤러가 리턴한 return 문자열에 앞뒤에 적절한 경로를 붙이는 것. -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
