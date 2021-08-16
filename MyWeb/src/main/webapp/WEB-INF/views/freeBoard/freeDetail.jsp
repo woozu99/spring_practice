@@ -170,49 +170,61 @@
 					$('#reply').val('');
 					$('#replyId').val('');
 					$('#replyPw').val('');
-					getList(); //등록 성공 후 댓글 목록 함수를 호출해서 비동기식으로 목록 표현.
+					getList(1, true); //등록 성공 후 댓글 목록 함수를 호출해서 비동기식으로 목록 표현.
 				},
 				error: function(){
-					console.log("fail");
+					alert('등록에 실패했습니다. 관리자에게 문의하세요.');
 				}
 			});
 			
-			//목록 요청
-			let strAdd = '';//화면에 그려넣을 태그를 문자열의 형태로 추가할 변수
-			
-			function getList(){
-				
-				//gettJSON 함수를 통해 JSON형식의 파일을 읽어올 수 있다.
-				//get방식의 요청을 통해 서버로부터 받은 JSON 데이터를 로드한다.
-				//$.JSON(url, [DATA], [통신 성공 여부])
-				$.getJSON(
-					"<c:url value='/reply/getList/${article.bno}'/>",
-					function(data){
-						console.log(data);
-						
-						for(let i = 0; i < data.length ; i++){
-							strAdd += "<div class='reply-wrap' style='display:none;'>";
-                            strAdd += "<div class='reply-image'>";
-                            strAdd += "<img src='../resources/img/profile.png'>";
-                            strAdd += "</div>";
-                            strAdd += "<div class='reply-content'>";
-                            strAdd += "<div class='reply-group'>";
-                            strAdd += "<strong class='left'>"+ data[i].replyId +"</strong>"; 
-                     		strAdd += "<small class='left'>"+ data[i].replyDate +"</small>"
-                            strAdd += "<a href='"+ data[i].rno +"' class='right replyModify'><span class='glyphicon glyphicon-pencil'></span>수정</a>";
-                            strAdd += "<a href='"+ data[i].rno +"' class='right replyDelete'><span class='glyphicon glyphicon-remove'></span>삭제</a>";
-                            strAdd += "</div>";
-                            strAdd += "<p class='clearfix'>"+ data[i].reply +"</p>";
-                            strAdd += "</div>";
-                           strAdd += "</div>";
-						}
-						
-						$("#replyList").html(strAdd);//replayList영역에 추가
-						$('.reply-wrap').fadeIn(500);
-						
-					}
-				);
-			}
 		});
+		
+		//목록 요청
+		let page = 1;//페이지 번호
+		let strAdd = '';//화면에 그려넣을 태그를 문자열의 형태로 추가할 변수
+		
+		getList(1, true); //상세화면 진입시 리스트 목록 가져옴.
+		
+		//reset:화면을 리셋할 것인지 여부를 bool타입으로 받겠다.
+		function getList(pageNum, reset){ 
+			
+			//gettJSON 함수를 통해 JSON형식의 파일을 읽어올 수 있다.
+			//get방식의 요청을 통해 서버로부터 받은 JSON 데이터를 로드한다.
+			//$.JSON(url, [DATA], [통신 성공 여부])
+			$.getJSON(
+				"<c:url value='/reply/getList/${article.bno}'/>",
+				function(data){
+					console.log(data);
+					
+					//insert, update, delete 작업 뒤에는 댓글을 누적하고 있는 str변수를 초기화
+					if(reset === true){
+						strAdd = '';
+					}
+					
+					for(let i = 0; i < data.length ; i++){
+						strAdd += "<div class='reply-wrap' style='display:none;'>";
+	                    strAdd += "<div class='reply-image'>";
+	                    strAdd += "<img src='../resources/img/profile.png'>";
+	                    strAdd += "</div>";
+	                    strAdd += "<div class='reply-content'>";
+	                    strAdd += "<div class='reply-group'>";
+	                    strAdd += "<strong class='left'>"+ data[i].replyId +"</strong>"; 
+	             		strAdd += "<small class='left'>"+ data[i].replyDate +"</small>"
+	                    strAdd += "<a href='"+ data[i].rno +"' class='right replyModify'><span class='glyphicon glyphicon-pencil'></span>수정</a>";
+	                    strAdd += "<a href='"+ data[i].rno +"' class='right replyDelete'><span class='glyphicon glyphicon-remove'></span>삭제</a>";
+	                    strAdd += "</div>";
+	                    strAdd += "<p class='clearfix'>"+ data[i].reply +"</p>";
+	                    strAdd += "</div>";
+	                    strAdd += "</div>";
+					}
+					
+					$("#replyList").html(strAdd);//replayList영역에 추가
+					//화면에 댓글을 표현할 때 reply-wrap을 display:none으로 선언하고
+					//jQuery fadeIn함수로 서서히 드러나도록 처리
+					$('.reply-wrap').fadeIn(500);
+					
+				}
+			);
+		}
 	}); //end jquery
 </script>

@@ -17,15 +17,35 @@
 		VALUES(freereply_seq.NEXTVAL, #{bno}, #{reply}, #{replyId}, #{replyPw})
 	</insert>
 	
-	<select id="getList" resultMap="replyVO">
+	<!-- <select id="getList" resultMap="replyVO">
 		SELECT *
 		FROM freereply
 		WHERE bno = #{bno}
 		ORDER BY rno DESC
+	</select> -->
+	
+	<select id="getList" resultMap="replyVO">
+		SELECT *
+		FROM
+			(
+			SELECT ROWNUM AS rn, tbl.*
+			FROM
+				(
+				SELECT *
+				FROM freereply
+				WHERE bno = #{bno}
+				ORDER BY rno DESC
+				) tbs
+			)
+		<![CDATA[
+		WHERE rn > (#{paging.pageNum} - 1) * #{paging.countPerPage}
+		AND rn <= #{paging.pageNum} * #{paging.countPerPage}
+		]]>
 	</select>
 	
-	<select id="getTotal">
-	
+	<select id="getTotal" resultType="int">
+		SELECT count(*) FROM freereply
+		WHERE bno = #{bno}
 	</select>
 	
 	
