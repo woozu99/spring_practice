@@ -8,7 +8,7 @@ import com.spring.myweb.command.ReplyVO;
 public interface IReplyMapper {
 	
 	//댓글 등록
-	void replyRegist(ReplyVO vo);
+	int replyRegist(ReplyVO vo);
 	
 	//댓글 목록 요청
 //	List<ReplyVO> getList(int bno);

@@ -32,22 +32,22 @@ public class ReplyService implements IReplyService {
 
 	@Override
 	public int getTotal(int bno) {
-		return 0;
+		return mapper.getTotal(bno);
 	}
 
 	@Override
 	public int pwCheck(ReplyVO vo) {
-		return 0;
+		return mapper.replyRegist(vo);
 	}
 
 	@Override
 	public void update(ReplyVO vo) {
-
+		mapper.update(vo);
 	}
 
 	@Override
 	public void delete(int rno) {
-
+		mapper.delete(rno);
 	}
 
 }
