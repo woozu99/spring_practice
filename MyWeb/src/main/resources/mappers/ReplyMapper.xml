@@ -48,6 +48,15 @@
 		WHERE bno = #{datas.bno}
 	</select>
 	
+	<select id="pwCheck" resultType="int">
+		SELECT COUNT(*) FROM freereply
+		WHERE bno = #{bno} AND reply_pw = #{replyPw}
+	</select>
+	
+	<delete id="delete">
+		DELETE FROM freereply
+		WHERE bno = #{bno}
+	</delete>
 	
 	
 </mapper>

@@ -73,7 +73,7 @@ public class ReplyController {
 	
 	@PostMapping("/delete")
 	public String delete(@RequestBody ReplyVO vo) {
-		
+		System.out.println(vo+"!");
 		int result = service.pwCheck(vo);
 		if(result == 1) {
 			service.delete(vo.getRno());

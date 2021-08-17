@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.spring.myweb.user.mapper.IUserMapper">
+
+	<resultMap type="com.spring.myweb.command.UserVO" id="userVO">
+		<result column="user_id" property="userId"/>
+		<result column="user_pw" property="userPw"/>
+		<result column="user_name" property="userName"/>
+		<result column="user_phone_1" property="userPhone1"/>
+		<result column="user_phone_2" property="userPhone2"/>
+		<result column="user_email_1" property="userEmail1"/>
+		<result column="user_email_2" property="userEmail2"/>
+		<result column="addr_basic" property="addrBasic"/>
+		<result column="addr_detail" property="addrDetail"/>
+		<result column="addr_zip_num" property="addrZipNum"/>
+		<result column="reg_date" property="regDate"/>
+	</resultMap>
+
+	<select id="idCheck" resultType="int">
+		SELECT COUNT(*) FROM users
+		WHERE user_id = #{id}
+	</select>
+	
+	<insert id="join">
+	
+	</insert>
+	
+	<select id="login">
+	
+	</select>
+	
+</mapper>

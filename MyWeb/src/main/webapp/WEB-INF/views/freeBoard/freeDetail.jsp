@@ -99,7 +99,7 @@
 		<div class="modal-dialog modal-md">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="btn btn-default pull-right" data-dismiss="modal">닫기</button>
+					<button type="button" class="btn btn-default pull-right" data-dismiss="modal" id="nanana">닫기</button>
 					<h4 class="modal-title">댓글수정</h4>
 				</div>
 				<div class="modal-body">
@@ -246,6 +246,33 @@
 				}
 			);
 		}
+		
+		//모달 열기
+		
+		$('#replyList').on('click', 'a', function(e){
+			e.preventDefault();// 태그의 고유 기능을 중지
+			
+			$('#replyModal').modal('show');
+			//하나의 모달로 수정과 삭제 모달 처리하기
+			//a태그가 2개이므로 어떤 태그가 클릭되었는지 확인
+			if($(this).hasClass('replyModify')){
+				//수정버튼 클릭
+				$('.modal-title').html('댓글 수정');
+				$('#modalReply').css('display', 'inline');
+				$('#modalModBtn').css('display', 'inline');
+				$('#modalDelBtn').css('display', 'none'); //삭제버튼 숨기기
+			} else{
+				//삭제버튼 클릭
+				$('.modal-title').html('댓글 삭제');
+				$('#modalReply').css('display', 'none'); //내용입력 숨기기
+				$('#modalModBtn').css('display', 'none'); //수정버튼 숨기기
+				$('#modalDelBtn').css('display', 'inline');	
+			}
+			
+			//jQuery를 이용한 모달 창 열기/닫기 ('show' / 'hide')
+			$('#replyModal').modal('show');
+		})
+		
 		
 		//수정함수
 		
