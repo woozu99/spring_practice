@@ -71,10 +71,21 @@ public class ReplyController {
 		return map;
 	}
 	
+	@PostMapping("/update")
+	public String update(@RequestBody ReplyVO vo) {
+		int result = service.pwCheck(vo);
+		if(result == 1) {
+			service.update(vo);
+			return "updateSuccess";
+		} else {
+			return "pwFail";
+		}
+	}
+	
 	@PostMapping("/delete")
 	public String delete(@RequestBody ReplyVO vo) {
-		System.out.println(vo+"!");
 		int result = service.pwCheck(vo);
+		System.out.println(result);
 		if(result == 1) {
 			service.delete(vo.getRno());
 			return "delSuccess";

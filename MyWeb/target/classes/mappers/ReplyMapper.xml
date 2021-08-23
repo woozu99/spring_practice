@@ -50,12 +50,18 @@
 	
 	<select id="pwCheck" resultType="int">
 		SELECT COUNT(*) FROM freereply
-		WHERE bno = #{bno} AND reply_pw = #{replyPw}
+		WHERE rno = #{rno} AND reply_pw = #{replyPw}
 	</select>
+	
+	<update id="update">
+		UPDATE freereply
+		SET reply = #{reply}
+		WHERE rno = #{rno}
+	</update>
 	
 	<delete id="delete">
 		DELETE FROM freereply
-		WHERE bno = #{bno}
+		WHERE rno = #{rno}
 	</delete>
 	
 	

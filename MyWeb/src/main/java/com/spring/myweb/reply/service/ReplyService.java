@@ -37,8 +37,7 @@ public class ReplyService implements IReplyService {
 
 	@Override
 	public int pwCheck(ReplyVO vo) {
-		System.out.println(vo);
-		return mapper.replyRegist(vo);
+		return mapper.pwCheck(vo);
 	}
 
 	@Override

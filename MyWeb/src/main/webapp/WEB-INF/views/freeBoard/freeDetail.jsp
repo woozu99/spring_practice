@@ -200,12 +200,12 @@
 			//get방식의 요청을 통해 서버로부터 받은 JSON 데이터를 로드한다.
 			//$.JSON(url, [DATA], [통신 성공 여부])
 			$.getJSON(
-				"<c:url value='/reply/getList/${article.bno}/'/>" + page,
+				"<c:url value='/reply/getList/${article.bno}/'/>" + pageNum,
 				function(data){
 					console.log(data);
 					const list = data.list;
 					
-					if(data.total < page * 10){
+					if(data.total <= pageNum * 10){
 						$('#showMoreBtn').hide();
 					} else{
 						$('#showMoreBtn').show();
@@ -252,7 +252,11 @@
 		$('#replyList').on('click', 'a', function(e){
 			e.preventDefault();// 태그의 고유 기능을 중지
 			
-			$('#replyModal').modal('show');
+			//클릭된 댓글 번호 값 form에 넣기
+			const rno = $(this).attr('href');
+			const reply = $();
+			$('#modalRno').val(rno);
+			
 			//하나의 모달로 수정과 삭제 모달 처리하기
 			//a태그가 2개이므로 어떤 태그가 클릭되었는지 확인
 			if($(this).hasClass('replyModify')){
@@ -271,10 +275,61 @@
 			
 			//jQuery를 이용한 모달 창 열기/닫기 ('show' / 'hide')
 			$('#replyModal').modal('show');
-		})
+		});
 		
 		
 		//수정함수
+		$('#modalModBtn').click(function(){
+			
+			/*
+			1. 모달창에 rno값, 수정한 댓글 내용(reply), replyPw값을 얻습니다.
+			2. ajax함수를 이용해서 post방식으로 reply/update 요청,
+			필요한 값은 JSON형식으로 처리해서 요청.
+			3. 서버에서는 요청받을 메서드 선언해서 비밀번호 확인하고, 비밀번호가 맞다면
+			 수정을 진행하세요. 만약 비밀번호가 틀렸다면 "pwFail"을 반환해서
+			 '비밀번호가 틀렸습니다.' 경고창을 띄우세요.
+			4. 업데이트가 진행된 다음에는 modal창의 모든 값을 ''로 처리해서 초기화 시키시고
+			 modal창을 닫으세요.
+			 수정된 댓글 내용이 반영될 수 있도록 댓글 목록을 다시 불러 오세요.
+			*/
+			
+			const rno = $('#modalRno').val();
+			const reply = $('#modalReply').val();
+			const replyPw = $('#modalPw').val();
+			
+			console.log(rno + '' + reply + '' + replyPw + '!');
+			$.ajax({
+				type: "post",
+				url: "<c:url value='/reply/update' />",
+				data: JSON.stringify({
+					"rno" : rno,
+					"reply" : reply,
+					"replyPw" : replyPw
+				}),
+				headers: {
+					"Content-type": "application/json"
+				},
+				success: function(data){
+					if(data === 'updateSuccess'){
+						alert('게시물이 수정되었습니다.')
+						$('#modalReply').val('');//댓글내용 초기화
+						$('#modalPw').val(''); //비밀번호 초기화
+						$('#replyModal').modal('hide');//모달 내리기
+						page = 1;
+						getList(page, true);
+						
+						
+					} else{
+						alert('비밀번호가 틀렸습니다.')
+						$('#modalPw').val(''); //비밀번호 초기화
+					}
+				},
+				error: function(){
+					alert('수정에 실패했습니다. 관리자에게 문의하세요.');
+					$('#modalPw').val(''); //비밀번호 초기화
+				}
+			});
+		});
 		
 		//삭제함수
 		$('#modalDelBtn').click(function(){
@@ -286,8 +341,8 @@
 			3. 서버에서는 요청을 받아서 비밀번호를 확인하고, 비밀번호가 맞으면 식제를 진행하면 됨
 			4. 만약 비밀번호가 틀렸다면 문자열을 반환해서 틀렸다는 경고창 띄우기.
 			*/
-			const rno = $('#modelRno').val();
-			const replyPw = $('#modelPw').val();
+			const rno = $('#modalRno').val();
+			const replyPw = $('#modalPw').val();
 			
 			if(replyPw === ''){
 				alert('비밀번호를 확인하세요.');
@@ -305,16 +360,20 @@
 					"Content-type" : "application/json"
 				},
 				success: function(data) {
-					if(data == 'delSuccess'){
+					if(data === 'delSuccess'){
 						alert('게시물이 삭제되었습니다.');
 						$('#modalPw').val(''); //비밀번호 초기화
 						$('#replyModal').modal('hide');//모달 내리기
+						page = 1;
+						getList(page, true);
 					} else{
 						alert('비밀번호가 틀렸습니다.');
+						$('#modalPw').val(''); //비밀번호 초기화
 					}
 				},
 				error: function() {
 					alert('삭제에 실패했습니다. 관리자에게 문의하세요.');
+					$('#modalPw').val(''); //비밀번호 초기화
 				}
 			}); //end ajax
 			
